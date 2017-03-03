@@ -15,8 +15,10 @@ public class PlayerController : NetworkBehaviour
 	void Update () {
 
         if (!isLocalPlayer)
+        {
             return;
-
+        }
+            
         PlayerMovement();
 	}
 
