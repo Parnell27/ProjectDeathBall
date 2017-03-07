@@ -7,7 +7,7 @@ public class PlayerCamera : PlayerController {
 	// Use this for initialization
 	void Start () {
 
-        player = this.transform.parent.gameObject;
+        player = PlayerController.localPlayer.gameObject;
         //specifies that the player object is the parent of the object this scrript is attached to
 
 	}
