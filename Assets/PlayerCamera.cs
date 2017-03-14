@@ -16,20 +16,29 @@ public class PlayerCamera : PlayerController {
 	void Update () {
 
         CameraMove();
+        //Calls the camera movement function every frame
 
     }
 
-    Vector2 cameraMove;
-    Vector2 smoothLook;
-    public float sensitivity = 4.0f;
-    public float smoothing = 2.0f;
+    Vector2 cameraMove; 
+    //An empty Vector2 (coordinates in x and y) to keep track of the total camera movement
 
-    GameObject player;
+    Vector2 smoothLook;
+    //An empty Vector2 for the application of smoothing to the movement
+
+    public float sensitivity = 4.0f; //Speed of camera movement
+    public float smoothing = 2.0f; //Level of smoothing to the camera movement
+
+    GameObject player; //Creates an instance of the GameObject under the name of player
 
     void CameraMove()
     {
         var mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        //Takes the position of the mouse in both the x and y axes every update
+
         mouseDelta = Vector2.Scale(mouseDelta, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
+        /* Multiplies the sensitivity and smmothing values with the changes in mouse position on both
+        the x and y axes to specify the movement of the camera */
 
         smoothLook.x = Mathf.Lerp(smoothLook.x, mouseDelta.x, 1f / smoothing);
         smoothLook.y = Mathf.Lerp(smoothLook.y, mouseDelta.y, 1f / smoothing);
