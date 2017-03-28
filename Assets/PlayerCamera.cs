@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCamera : PlayerController {
+public class PlayerCamera : MonoBehaviour {
 
-	// Use this for initialization
+    public static PlayerCamera instance;
+    
+    // Use this for initialization
 	void Start () {
 
         player = PlayerController.localPlayer.gameObject;
         //specifies that the player object is the parent of the object this scrript is attached to
+        instance = this; //Specifies that there is only one existing instances of the camera
 
 	}
 	

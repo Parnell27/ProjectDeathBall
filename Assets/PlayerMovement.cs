@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : PlayerController {
+public class PlayerMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
