@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public float moveSpeed = 10.0f; //Default movement speed
-    public float jumpHeight = 1000.0f; //Default jump height
+    public float jumpHeight = 1500.0f; //Default jump height
 
     void PlayerMove()
     {

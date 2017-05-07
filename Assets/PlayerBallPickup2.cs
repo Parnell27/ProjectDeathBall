@@ -8,26 +8,58 @@ public class PlayerBallPickup2 : NetworkBehaviour {
     public GameObject BallPlaceholder;
     //An empty game object to specify which object is the ball placeholder
 
+    public Transform HoldPosition;
+
+    public GameObject cameraDirection;
+
+    bool ballHeld = false;
+    float throwSpeed = 12f;
+    float timeLastThrown;
+    float pickupDelay = 1;
+
+    private void Start()
+    {
+        timeLastThrown = Time.time;
+    }
+
+    private void Update()
+    {
+            MoveWithCamera();
+            ThrowBall();
+    }
+
     void MoveWithCamera()
     {
-        BallPlaceholder.transform.position = PlayerCamera.instance.transform.position;
+        HoldPosition.position = PlayerCamera.instance.transform.position;
         //Moves the ball position as the position of the camera changes
 
-        BallPlaceholder.transform.rotation = PlayerCamera.instance.transform.rotation;
+        HoldPosition.rotation = PlayerCamera.instance.transform.rotation;
         //Rotates the ball as the rotation of the camera changes
     }
 
     void OnCollisionEnter(Collision touchBall)
     {
-        ServerPickupBall(touchBall);
-        //Runs the pickup method on the server upon detection of collision between the player and an object
+        if (touchBall.gameObject == BallSpawn.ballObject && Time.time - timeLastThrown >= pickupDelay)
+        {
+            ServerPickupBall(touchBall);
+            //Runs the pickup method on the server upon detection of collision between the player and an object
+
+            ballHeld = true;
+        }
     }
 
     void ThrowBall()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0) && isLocalPlayer && BallSpawn.ballObject.active == false)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isLocalPlayer)
         {
-            ServerThrowBall();
+            if (ballHeld == true)
+            {
+                ServerThrowBall();
+                Debug.Log("Input detected");
+
+                ballHeld = false;
+                timeLastThrown = Time.time;
+            }
         }
     }
 
@@ -54,7 +86,13 @@ public class PlayerBallPickup2 : NetworkBehaviour {
     void ServerThrowBall()
     {
         BallSpawn.ballObject.SetActive(true);
+        BallSpawn.ballObject.transform.position = BallPlaceholder.transform.position;
+        
+
         BallPlaceholder.SetActive(false);
+
+        //BallSpawn.ballObject.GetComponent<Rigidbody>().AddForce(cameraDirection.transform.forward * throwSpeed);
+        BallSpawn.ballObject.GetComponent<Rigidbody>().velocity = cameraDirection.transform.forward * throwSpeed;
 
         RpcThrowBall();
     }
@@ -74,5 +112,7 @@ public class PlayerBallPickup2 : NetworkBehaviour {
         BallSpawn.ballObject.SetActive(true);
         BallSpawn.ballObject.transform.position = BallPlaceholder.transform.position;
         BallPlaceholder.SetActive(false);
+        //BallSpawn.ballObject.GetComponent<Rigidbody>().AddForce(cameraDirection.transform.forward * throwSpeed);
+        BallSpawn.ballObject.GetComponent<Rigidbody>().velocity = cameraDirection.transform.forward * throwSpeed;
     }
 }

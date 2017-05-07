@@ -12,9 +12,8 @@ public class PlayerController : NetworkBehaviour
     public new Camera camera;
     //Creates an instance of a camera under the name of camera that will store the player camera
 
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         if (!isLocalPlayer)
         {
             Destroy(camera.gameObject);
