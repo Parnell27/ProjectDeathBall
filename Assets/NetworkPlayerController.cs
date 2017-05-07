@@ -48,7 +48,14 @@ public class NetworkPlayerController : NetworkBehaviour
         }
     }
 
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        UpdateTeamColour();
+    }
+
     [Server]
+
     //Specifies the size of each team andincrements the smallest team when a player joins
     public static Team GetSmallestTeam()
     {
