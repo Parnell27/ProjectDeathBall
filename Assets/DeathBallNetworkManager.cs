@@ -79,17 +79,22 @@ public class DeathBallNetworkManager : NetworkManager
         }
 
         GameObject player;
-        Transform startPos = GetStartPosition(NetworkPlayerController.GetSmallestTeam());
+
+		NetworkPlayerController.Team newPlayerTeam = NetworkPlayerController.GetSmallestTeam();
+        Transform startPos = GetStartPosition(newPlayerTeam);
         if (startPos != null)
         {
-            player = (GameObject)Instantiate(playerPrefab, startPos.position, startPos.rotation);
+            player = Instantiate(playerPrefab, startPos.position, startPos.rotation);
         }
         else
         {
-            player = (GameObject)Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+            player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         }
 
-        NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
+		NetworkPlayerController playerController = player.GetComponent<NetworkPlayerController>();
+		playerController.PlayerTeam = newPlayerTeam;
+
+		NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
     }
 
     public Transform GetStartPosition(NetworkPlayerController.Team team)
@@ -101,7 +106,7 @@ public class DeathBallNetworkManager : NetworkManager
         }
         else
         {
-            int element = Random.Range(0, team1Spawns.Count - 1);
+            int element = Random.Range(0, team2Spawns.Count - 1);
             return team2Spawns[element];
         }
     }

@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 
 public class ScoringManager : NetworkBehaviour {
 
-    MatchManager matchManager = new MatchManager();
     public int TeamNumber;
     
     // Use this for initialization
@@ -28,21 +27,20 @@ public class ScoringManager : NetworkBehaviour {
     }
 
     [Server]
-
     void ServerUpdateScore()
     {
         if (TeamNumber == 1)
         {
-            matchManager.team1Score += 1;
+            MatchManager.singleton.team1Score += 1;
             Debug.Log("Team 1 has scored.");
         }
         else if (TeamNumber == 2)
         {
-            matchManager.team2Score += 1;
+			MatchManager.singleton.team2Score += 1;
             Debug.Log("Team 2 has scored.");
         }
 
-        Debug.Log("New score " + matchManager.team1Score + " : " + matchManager.team2Score);
+        Debug.Log("New score " + MatchManager.singleton.team1Score + " : " + MatchManager.singleton.team2Score);
         RpcUpdateScore();
 
     }
