@@ -48,13 +48,6 @@ public class NetworkPlayerController : NetworkBehaviour
         }
     }
 
-    //Overrides the method that runs when the server starts to call the method that obtains the smallest team
-    public override void OnStartServer()
-    {
-        base.OnStartServer();
-        team = GetSmallestTeam();
-    }
-
     [Server]
     //Specifies the size of each team andincrements the smallest team when a player joins
     public static Team GetSmallestTeam()
