@@ -18,6 +18,8 @@ public class NetworkPlayerController : NetworkBehaviour
     //An attribute on the player setting their team and running the method to update their colour
     public Team PlayerTeam
     {
+        get { return team; }
+
         set
         {
             team = value;

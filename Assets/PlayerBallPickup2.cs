@@ -12,7 +12,7 @@ public class PlayerBallPickup2 : NetworkBehaviour {
 
     public GameObject cameraDirection;
 
-    bool ballHeld = false;
+    public  bool ballHeld = false;
     float throwSpeed = 12f;
     float timeLastThrown;
     float pickupDelay = 1;
@@ -27,6 +27,7 @@ public class PlayerBallPickup2 : NetworkBehaviour {
             MoveWithCamera();
             ThrowBall();
     }
+
 
     void MoveWithCamera()
     {
@@ -44,7 +45,12 @@ public class PlayerBallPickup2 : NetworkBehaviour {
             ServerPickupBall(touchBall);
             //Runs the pickup method on the server upon detection of collision between the player and an object
 
+            Debug.Log("Ball picked up");
             ballHeld = true;
+
+            StartCoroutine(gameObject.GetComponent<DeathTimer>().StartTimer());
+            //Runs a coroutine from the death timer that starts the countdown
+
         }
     }
 
@@ -55,11 +61,23 @@ public class PlayerBallPickup2 : NetworkBehaviour {
             if (ballHeld == true)
             {
                 ServerThrowBall();
-                Debug.Log("Input detected");
+                Debug.Log("Ball thrown");
+                Debug.Log("Death Timer stopped: " + Time.time);
 
                 ballHeld = false;
                 timeLastThrown = Time.time;
+
+                StopCoroutine(gameObject.GetComponent<DeathTimer>().StartTimer());
             }
+        }
+    }
+
+    public void DropBall()
+    {
+        if (ballHeld)
+        {
+            ServerDropBall();
+            ballHeld = false;
         }
     }
 
@@ -97,6 +115,15 @@ public class PlayerBallPickup2 : NetworkBehaviour {
         RpcThrowBall();
     }
 
+    void ServerDropBall()
+    {
+        BallSpawn.ballObject.transform.position = BallPlaceholder.transform.position;
+        BallPlaceholder.SetActive(false);
+        BallSpawn.ballObject.SetActive(true);
+
+        RpcDropBall();
+    }
+
     [ClientRpc] // Specifies code that runs on all connected clients
     void RpcPickupBall()
     {
@@ -112,7 +139,13 @@ public class PlayerBallPickup2 : NetworkBehaviour {
         BallSpawn.ballObject.SetActive(true);
         BallSpawn.ballObject.transform.position = BallPlaceholder.transform.position;
         BallPlaceholder.SetActive(false);
-        //BallSpawn.ballObject.GetComponent<Rigidbody>().AddForce(cameraDirection.transform.forward * throwSpeed);
         BallSpawn.ballObject.GetComponent<Rigidbody>().velocity = cameraDirection.transform.forward * throwSpeed;
+    }
+
+    void RpcDropBall()
+    {
+        BallSpawn.ballObject.transform.position = BallPlaceholder.transform.position;
+        BallPlaceholder.SetActive(false);
+        BallSpawn.ballObject.SetActive(true);
     }
 }

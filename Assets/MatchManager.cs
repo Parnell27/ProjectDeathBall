@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public class MatchManager : MonoBehaviour {
 
-	public static MatchManager singleton;
+   public static MatchManager singleton;
 
 	public void Awake()
 	{
@@ -27,8 +27,8 @@ public class MatchManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		ResetScores();
-	}
+        ResetScores();
+    }
 	
 	// Update is called once per frame
 	void Update () {

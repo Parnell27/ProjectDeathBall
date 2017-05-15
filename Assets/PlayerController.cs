@@ -30,6 +30,7 @@ public class PlayerController : NetworkBehaviour
             gameObject.AddComponent<PlayerMovement>();
             /*If the object spawned is the local player on that instance of the game
             the camera and movement scripts are added to the new player upon spawning. */
+            ShowPanels.singleton.ShowHUD(); //Shows the HUD for the player when they spawn
         }
         
         Cursor.lockState = CursorLockMode.Locked;

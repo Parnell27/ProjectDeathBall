@@ -3,14 +3,21 @@ using System.Collections;
 
 public class ShowPanels : MonoBehaviour {
 
-	public GameObject optionsPanel;							//Store a reference to the Game Object OptionsPanel 
+    public static ShowPanels singleton;
+
+    public GameObject optionsPanel;							//Store a reference to the Game Object OptionsPanel 
 	public GameObject optionsTint;							//Store a reference to the Game Object OptionsTint 
 	public GameObject menuPanel;							//Store a reference to the Game Object MenuPanel 
-	public GameObject pausePanel;							//Store a reference to the Game Object PausePanel 
+	public GameObject pausePanel;							//Store a reference to the Game Object PausePanel
+    public GameObject HUDPanel;                             //Store a reference to the Game Object HUD
 
-
-	//Call this function to activate and display the Options panel during the main menu
-	public void ShowOptionsPanel()
+    void Start()
+    {
+        singleton = this;
+    }
+    
+    //Call this function to activate and display the Options panel during the main menu
+    public void ShowOptionsPanel()
 	{
 		optionsPanel.SetActive(true);
 		optionsTint.SetActive(true);
@@ -49,4 +56,14 @@ public class ShowPanels : MonoBehaviour {
 		optionsTint.SetActive(false);
 
 	}
+
+    public void ShowHUD()
+    {
+        HUDPanel.SetActive(true);
+    }
+
+    public void HideHUD()
+    {
+        HUDPanel.SetActive(false);
+    }
 }
