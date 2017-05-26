@@ -27,6 +27,11 @@ public class ScoringManager : NetworkBehaviour {
 
     void OnTriggerEnter(Collider ball)
     {
+        if (!NetworkServer.active)
+        {
+            return;
+        }
+
         if (ball.gameObject == BallSpawn.ballObject)
         {
             ServerUpdateScore();

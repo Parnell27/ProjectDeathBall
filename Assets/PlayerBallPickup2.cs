@@ -12,7 +12,7 @@ public class PlayerBallPickup2 : NetworkBehaviour {
 
     public GameObject cameraDirection;
 
-    public  bool ballHeld = false;
+    [SyncVar] public bool ballHeld = false;
     float throwSpeed = 12f;
     float timeLastThrown;
     float pickupDelay = 1;
@@ -94,7 +94,6 @@ public class PlayerBallPickup2 : NetworkBehaviour {
         if (ballHeld)
         {
             ServerDropBall();
-            ballHeld = false;
         }
     }
 
@@ -135,9 +134,11 @@ public class PlayerBallPickup2 : NetworkBehaviour {
 
     void ServerDropBall()
     {
-        BallSpawn.ballObject.transform.position = BallPlaceholder.transform.position;
+        BallScript.singleton.gameObject.transform.position = BallPlaceholder.transform.position;
         BallPlaceholder.SetActive(false);
-        BallSpawn.ballObject.SetActive(true);
+        BallScript.singleton.gameObject.SetActive(true);
+
+        ballHeld = false;
 
         RpcDropBall();
     }
@@ -164,8 +165,8 @@ public class PlayerBallPickup2 : NetworkBehaviour {
 
     void RpcDropBall()
     {
-        BallSpawn.ballObject.transform.position = BallPlaceholder.transform.position;
+        BallScript.singleton.gameObject.transform.position = BallPlaceholder.transform.position;
         BallPlaceholder.SetActive(false);
-        BallSpawn.ballObject.SetActive(true);
+        BallScript.singleton.gameObject.SetActive(true);
     }
 }
