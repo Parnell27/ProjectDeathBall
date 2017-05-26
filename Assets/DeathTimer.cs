@@ -52,14 +52,6 @@ public class DeathTimer : Timer {
 
     }
 
-    public IEnumerator StartTimer()
-    {
-        // Start function TimerCountdown as a coroutine
-        yield return StartCoroutine("TimerCountdown");
-
-        yield break;
-    }
-
     public override void TimerExpire()
     {
         GetComponent<DeathManager>().PlayerDie();

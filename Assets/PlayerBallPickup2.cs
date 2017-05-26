@@ -24,7 +24,10 @@ public class PlayerBallPickup2 : NetworkBehaviour {
 
     private void Update()
     {
+        if (isLocalPlayer)
+        {
             MoveWithCamera();
+        }
             ThrowBall();
     }
 
@@ -40,35 +43,49 @@ public class PlayerBallPickup2 : NetworkBehaviour {
 
     void OnCollisionEnter(Collision touchBall)
     {
-        if (touchBall.gameObject == BallSpawn.ballObject && Time.time - timeLastThrown >= pickupDelay)
+        if (touchBall.gameObject == BallScript.singleton.gameObject && Time.time - timeLastThrown >= pickupDelay)
         {
-            ServerPickupBall(touchBall);
-            //Runs the pickup method on the server upon detection of collision between the player and an object
+            if (isServer)
+            {
+                ServerPickupBall(touchBall);
+                //Runs the pickup method on the server upon detection of collision between the player and an object
 
-            Debug.Log("Ball picked up");
-            ballHeld = true;
+                Debug.Log("Ball picked up");
+            }
 
-            StartCoroutine(gameObject.GetComponent<DeathTimer>().StartTimer());
-            //Runs a coroutine from the death timer that starts the countdown
-
+            if (isLocalPlayer)
+            {
+                if (startTimer != null)
+                {
+                    StopCoroutine(startTimer);
+                }
+                startTimer = StartCoroutine(gameObject.GetComponent<DeathTimer>().TimerCountdown());
+                //Runs a coroutine from the death timer that starts the countdown
+            }
         }
     }
 
+    Coroutine startTimer;
+
     void ThrowBall()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0) && isLocalPlayer)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isLocalPlayer && ballHeld == true)
         {
-            if (ballHeld == true)
+            CmdThrowBall(cameraDirection.transform.position, cameraDirection.transform.forward);
+            Debug.Log("Ball thrown");
+            Debug.Log("Death Timer stopped: " + Time.time);
+
+            timeLastThrown = Time.time;
+
+            if (startTimer != null)
             {
-                ServerThrowBall();
-                Debug.Log("Ball thrown");
-                Debug.Log("Death Timer stopped: " + Time.time);
-
-                ballHeld = false;
-                timeLastThrown = Time.time;
-
-                StopCoroutine(gameObject.GetComponent<DeathTimer>().StartTimer());
+                StopCoroutine(startTimer);
+                UIManager.singleton.deathTimerText.text = "5";
+                startTimer = null;
             }
+
+            StopCoroutine(gameObject.GetComponent<DeathTimer>().TimerCountdown());
+            
         }
     }
 
@@ -84,13 +101,15 @@ public class PlayerBallPickup2 : NetworkBehaviour {
     [Server] // Specifies code that runs on the server
     void ServerPickupBall(Collision touchBall)
     {
-        if (touchBall.gameObject == BallSpawn.ballObject)
+        if (touchBall.gameObject == BallScript.singleton.gameObject)
         {
-            BallSpawn.ballObject.SetActive(false);
+            BallScript.singleton.gameObject.SetActive(false);
             //Disables the ball object within the scene
 
             BallPlaceholder.SetActive(true);
             //Enables the ball placeholder for the player holding the ball
+
+            ballHeld = true;
 
             RpcPickupBall();
         }
@@ -101,18 +120,17 @@ public class PlayerBallPickup2 : NetworkBehaviour {
 
     }
 
-    void ServerThrowBall()
+    [Command]
+    void CmdThrowBall(Vector3 position, Vector3 forward)
     {
-        BallSpawn.ballObject.SetActive(true);
-        BallSpawn.ballObject.transform.position = BallPlaceholder.transform.position;
-        
-
+        BallScript.singleton.gameObject.SetActive(true);
+        BallScript.singleton.gameObject.transform.position = BallPlaceholder.transform.position;
         BallPlaceholder.SetActive(false);
 
-        //BallSpawn.ballObject.GetComponent<Rigidbody>().AddForce(cameraDirection.transform.forward * throwSpeed);
-        BallSpawn.ballObject.GetComponent<Rigidbody>().velocity = cameraDirection.transform.forward * throwSpeed;
+        BallScript.singleton.GetComponent<Rigidbody>().velocity = forward * throwSpeed;
+        ballHeld = false;
 
-        RpcThrowBall();
+        RpcThrowBall(position, forward);
     }
 
     void ServerDropBall()
@@ -127,19 +145,21 @@ public class PlayerBallPickup2 : NetworkBehaviour {
     [ClientRpc] // Specifies code that runs on all connected clients
     void RpcPickupBall()
     {
-        BallSpawn.ballObject.SetActive(false);
+        BallScript.singleton.gameObject.SetActive(false);
         BallPlaceholder.SetActive(true);
     }
 
     /* The above code perfroms the same function as the  ServerPickupBall function, but executes on the
        player who picked up the ball so that it is visiblle on all connected clients. */
 
-    void RpcThrowBall()
+    [ClientRpc]
+    void RpcThrowBall(Vector3 position, Vector3 forward)
     {
-        BallSpawn.ballObject.SetActive(true);
-        BallSpawn.ballObject.transform.position = BallPlaceholder.transform.position;
+        BallScript.singleton.gameObject.SetActive(true);
         BallPlaceholder.SetActive(false);
-        BallSpawn.ballObject.GetComponent<Rigidbody>().velocity = cameraDirection.transform.forward * throwSpeed;
+
+        BallScript.singleton.GetComponent<Rigidbody>().velocity = forward * throwSpeed;
+        ballHeld = false;
     }
 
     void RpcDropBall()
