@@ -5,17 +5,19 @@ using UnityEngine.Networking;
 
 public class PlayerBallPickup2 : NetworkBehaviour {
 
-    public GameObject BallPlaceholder;
-    //An empty game object to specify which object is the ball placeholder
-
+    public GameObject BallPlaceholder;  //An empty game object to specify which object is the ball placeholder
     public Transform HoldPosition;
-
+    public GameObject BallSpawner;
     public GameObject cameraDirection;
 
+    public Vector3 currentPos;
+
     [SyncVar] public bool ballHeld = false;
-    float throwSpeed = 12f;
     [SyncVar] double timeLastThrown;
+    public bool correctBallPos = false;
+    float throwSpeed = 12f;
     float pickupDelay = 1;
+    
 
     private void Start()
     {
@@ -83,7 +85,6 @@ public class PlayerBallPickup2 : NetworkBehaviour {
             }
 
             StopCoroutine(gameObject.GetComponent<DeathTimer>().TimerCountdown());
-            
         }
     }
 
@@ -91,7 +92,7 @@ public class PlayerBallPickup2 : NetworkBehaviour {
     {
         if (ballHeld)
         {
-            ServerDropBall();
+            CmdDropBall();
         }
     }
 
@@ -132,11 +133,14 @@ public class PlayerBallPickup2 : NetworkBehaviour {
         RpcThrowBall(position, forward);
     }
 
-    void ServerDropBall()
+    [Command]
+    void CmdDropBall()
     {
-        BallScript.singleton.gameObject.transform.position = BallPlaceholder.transform.position;
-        BallPlaceholder.SetActive(false);
+        currentPos = gameObject.transform.position;
         BallScript.singleton.gameObject.SetActive(true);
+        timeLastThrown = Network.time;
+        BallPlaceholder.SetActive(false);
+        BallScript.singleton.gameObject.transform.position = currentPos;
 
         ballHeld = false;
 
@@ -165,10 +169,12 @@ public class PlayerBallPickup2 : NetworkBehaviour {
         timeLastThrown = Network.time;
     }
 
+    [ClientRpc]
     void RpcDropBall()
     {
-        BallScript.singleton.gameObject.transform.position = BallPlaceholder.transform.position;
-        BallPlaceholder.SetActive(false);
         BallScript.singleton.gameObject.SetActive(true);
+        timeLastThrown = Network.time;
+        BallPlaceholder.SetActive(false);
+        BallScript.singleton.gameObject.transform.position = currentPos;
     }
 }
