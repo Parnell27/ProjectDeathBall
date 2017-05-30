@@ -14,12 +14,12 @@ public class PlayerBallPickup2 : NetworkBehaviour {
 
     [SyncVar] public bool ballHeld = false;
     float throwSpeed = 12f;
-    float timeLastThrown;
+    [SyncVar] double timeLastThrown;
     float pickupDelay = 1;
 
     private void Start()
     {
-        timeLastThrown = Time.time;
+        timeLastThrown = Network.time;
     }
 
     private void Update()
@@ -43,7 +43,7 @@ public class PlayerBallPickup2 : NetworkBehaviour {
 
     void OnCollisionEnter(Collision touchBall)
     {
-        if (touchBall.gameObject == BallScript.singleton.gameObject && Time.time - timeLastThrown >= pickupDelay)
+        if (touchBall.gameObject == BallScript.singleton.gameObject)
         {
             if (isServer)
             {
@@ -73,9 +73,7 @@ public class PlayerBallPickup2 : NetworkBehaviour {
         {
             CmdThrowBall(cameraDirection.transform.position, cameraDirection.transform.forward);
             Debug.Log("Ball thrown");
-            Debug.Log("Death Timer stopped: " + Time.time);
-
-            timeLastThrown = Time.time;
+            Debug.Log("Death Timer stopped: " + Network.time);
 
             if (startTimer != null)
             {
@@ -100,7 +98,7 @@ public class PlayerBallPickup2 : NetworkBehaviour {
     [Server] // Specifies code that runs on the server
     void ServerPickupBall(Collision touchBall)
     {
-        if (touchBall.gameObject == BallScript.singleton.gameObject)
+        if (touchBall.gameObject == BallScript.singleton.gameObject && Network.time - timeLastThrown >= pickupDelay)
         {
             BallScript.singleton.gameObject.SetActive(false);
             //Disables the ball object within the scene
@@ -127,7 +125,9 @@ public class PlayerBallPickup2 : NetworkBehaviour {
         BallPlaceholder.SetActive(false);
 
         BallScript.singleton.GetComponent<Rigidbody>().velocity = forward * throwSpeed;
+
         ballHeld = false;
+        timeLastThrown = Network.time;
 
         RpcThrowBall(position, forward);
     }
@@ -160,7 +160,9 @@ public class PlayerBallPickup2 : NetworkBehaviour {
         BallPlaceholder.SetActive(false);
 
         BallScript.singleton.GetComponent<Rigidbody>().velocity = forward * throwSpeed;
+
         ballHeld = false;
+        timeLastThrown = Network.time;
     }
 
     void RpcDropBall()
