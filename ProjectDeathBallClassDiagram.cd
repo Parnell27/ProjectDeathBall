@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BallScript" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\BallScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BallSpawn" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAIAAAAAAACAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Assets\BallSpawn.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeathBallNetworkManager">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAQAAAEggABAAAgAAAAAAICAAEAAAAAAAAAAgA=</HashCode>
+      <FileName>Assets\DeathBallNetworkManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeathBallStartPosition">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\DeathBallStartPosition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeathManager">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Assets\DeathManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeathTimer">
+    <Position X="4" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAgIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\DeathTimer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MatchManager">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\MatchManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MatchTimer">
+    <Position X="2.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAKAAAAAAAAAgIAAIAAAAAACAAAAAAEAAAAA=</HashCode>
+      <FileName>Assets\MatchTimer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NetworkPlayerController">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="NetworkPlayerController.Team" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\NetworkPlayerController.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAkAEAAAABAAAQACACAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\NetworkPlayerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerBallPickup2">
+    <Position X="5.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CARAAAAAAiQAIggAABAQgAAEgAgECAAaAQAAAIgAAAA=</HashCode>
+      <FileName>Assets\PlayerBallPickup2.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerCamera">
+    <Position X="4" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUAAAAEACAAAAAAAAAAAAAAAABIAQABAAQAAAAAAAA=</HashCode>
+      <FileName>Assets\PlayerCamera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerController">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAiAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\PlayerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerMovement">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAEAAAAAAAAAAAIAAAAAAAIAAAACAAAAAAAAA=</HashCode>
+      <FileName>Assets\PlayerMovement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ScoreDetection">
+    <Position X="2.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAgAAAAAAAAAAAAAAAAAAQAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\ScoreDetection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ScoringManager">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAQAAAAAAAAEgAAQAACAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\ScoringManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Timer">
+    <Position X="0.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Timer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIManager">
+    <Position X="0.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAIAAAAQAAAACQEAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Assets\UIManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UpdateScoreUI">
+    <Position X="4" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAgAAAACQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\UpdateScoreUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DontDestroy">
+    <Position X="0.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Game Jam Template\Scripts\DontDestroy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSystemChecker">
+    <Position X="4" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Game Jam Template\Scripts\EventSystemChecker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pause">
+    <Position X="4" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEIEA=</HashCode>
+      <FileName>Assets\Game Jam Template\Scripts\Pause.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayMusic">
+    <Position X="5.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAACAAAAAAECAAAAEAABAAAAAAABAAABAAAAAACEQ=</HashCode>
+      <FileName>Assets\Game Jam Template\Scripts\PlayMusic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuitApplication">
+    <Position X="5.75" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Assets\Game Jam Template\Scripts\QuitApplication.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SetAudioLevels">
+    <Position X="4" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAGAAAAA=</HashCode>
+      <FileName>Assets\Game Jam Template\Scripts\SetAudioLevels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShowPanels">
+    <Position X="0.5" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAABAABGABAEEAAAAAAAAEgQIAAIAQAAAAAABBAAA=</HashCode>
+      <FileName>Assets\Game Jam Template\Scripts\ShowPanels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StartOptions">
+    <Position X="2.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAQCABEAABAAAQgQADAAAAABAAAAAIIAASAgABCEA=</HashCode>
+      <FileName>Assets\Game Jam Template\Scripts\StartOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

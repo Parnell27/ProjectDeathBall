@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -46,5 +48,6 @@ public class PlayerController : NetworkBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
         //Unlocks the cursor upon pressing the escape key
+
     }
 }

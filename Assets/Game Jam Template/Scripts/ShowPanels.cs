@@ -10,6 +10,7 @@ public class ShowPanels : MonoBehaviour {
 	public GameObject menuPanel;							//Store a reference to the Game Object MenuPanel 
 	public GameObject pausePanel;							//Store a reference to the Game Object PausePanel
     public GameObject HUDPanel;                             //Store a reference to the Game Object HUD
+    public GameObject EndGamePanel;                         //Store a reference to the Game Object EndGamePanel
 
     void Start()
     {
@@ -57,13 +58,27 @@ public class ShowPanels : MonoBehaviour {
 
 	}
 
+    //Call this function to activate and display the HUD during game play
     public void ShowHUD()
     {
         HUDPanel.SetActive(true);
     }
 
+    //Call this function to deactivate and hide the HUD during game play
     public void HideHUD()
     {
         HUDPanel.SetActive(false);
+    }
+
+    //Call this function to activate and display the end game panel during game play
+    public void ShowEndPanel()
+    {
+        EndGamePanel.SetActive(true);
+    }
+
+    //Call this function to deactivate and hide the end game panel during game play
+    public void HideEndPanel()
+    {
+        EndGamePanel.SetActive(false);
     }
 }

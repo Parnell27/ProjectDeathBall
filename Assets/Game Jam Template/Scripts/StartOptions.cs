@@ -24,7 +24,7 @@ public class StartOptions : MonoBehaviour {
 	private float fastFadeIn = .01f;									//Very short fade time (10 milliseconds) to start playing music immediately without a click/glitch
 	private ShowPanels showPanels;                                      //Reference to ShowPanels script on UI GameObject, to show and hide panels
 
-    public GameObject NetworkManager;
+    public GameObject NetworkManager;                                   //An empty game object intended for the network manager to be specified within
 
 	void Awake()
 	{
@@ -60,7 +60,7 @@ public class StartOptions : MonoBehaviour {
 		{
 			//Call the StartGameInScene function to start game without loading a new scene.
 			StartGameInScene();
-            NetworkManager.SetActive(true);
+            NetworkManager.SetActive(true); //Activates the network manager within the scene
 		}
 
 	}

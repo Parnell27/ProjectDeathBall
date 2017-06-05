@@ -7,81 +7,45 @@ using UnityEngine.UI;
 
 public class ScoringManager : NetworkBehaviour {
 
-    public int TeamNumber;
-    public GameObject ballSpawnPoint;
+    public static ScoringManager singleton; //Declares a new singleton under the same name as this script
+
+    [SyncVar]
+    public int scoreTeam1 = 0; //An integer value for team 1's score total
+    [SyncVar]
+    public int scoreTeam2 = 0; //An integer value for team 2's score total
+
+    [SyncVar]
+    public string scoreTeam1Text; //An string value for team 1's score total
+    [SyncVar]
+    public string scoreTeam2Text; //An string value for team 2's score total
 
     void Start()
     {
-        try
-        {
-            UIManager.singleton.team1ScoreText.text = MatchManager.singleton.team1Score.ToString();
-            UIManager.singleton.team2ScoreText.text = MatchManager.singleton.team2Score.ToString();
-            //Attempts to run the code while detecting any errors
-        }
-        catch (NullReferenceException)
-        {
-            //Catches any null reference errors and makes them execeptions so the code can run ignoring them
-        }
-
+        singleton = this; //Delcares that this script is the singleton
+        ResetScores(); //Calls ResetScores when the match starts
     }
 
-    void OnTriggerEnter(Collider ball)
+    //Resets each team's score to zero
+    void ResetScores()
     {
-        if (!NetworkServer.active)
-        {
-            return;
-        }
-
-        if (ball.gameObject == BallSpawn.ballObject)
-        {
-            ServerUpdateScore();
-            ball.transform.position = ballSpawnPoint.transform.position;
-            foreach (NetworkConnection conn in NetworkServer.connections)
-            {
-                conn.playerControllers[0].gameObject.GetComponent<DeathManager>().TargetPlayerDie(conn);
-                //Finds all connected players and run the target rpc kill script on them to respawn them after a point is scored
-            }      
-        }
-    }
-
-    [Server]
-    void ServerUpdateScore()
-    {
-        if (TeamNumber == 1)
-        {
-            MatchManager.singleton.team2Score += 1;
-            Debug.Log("Team 2 has scored.");
-            //UIManager.singleton.team2ScoreText.GetComponent<Text>();
-            UIManager.singleton.team2ScoreText.text = MatchManager.singleton.team2Score.ToString();
-            
-        }
-        else if (TeamNumber == 2)
-        {
-			MatchManager.singleton.team1Score += 1;
-            Debug.Log("Team 1 has scored.");
-            //UIManager.singleton.team1ScoreText.GetComponent<Text>();
-            UIManager.singleton.team1ScoreText.text = MatchManager.singleton.team1Score.ToString();
-        }
-
-        Debug.Log("New score " + MatchManager.singleton.team1Score + " : " + MatchManager.singleton.team2Score);
-        //RpcUpdateScore();
-
+        scoreTeam1 = scoreTeam2 = 0; //Sets the value of both score total to 0
+        scoreTeam1Text = scoreTeam1.ToString(); //Sets the vakue if team 1's score text to their score total
+        scoreTeam2Text = scoreTeam2.ToString(); //Sets the vakue if team 2's score text to their score total
     }
 
 
-    [ClientRpc]
+    //    [ClientRpc]
 
-    void RpcUpdateScore()
-    {
-        //if (TeamNumber == 1)
-        //{
-        //    MatchManager.singleton.team1Score += 1;
-        //    Debug.Log("Team 1 has scored.");
-        //}
-        //else if (TeamNumber == 2)
-        //{
-        //    MatchManager.singleton.team2Score += 1;
-        //    Debug.Log("Team 2 has scored.");
-        //}
-    }
+    //    void RpcUpdateScore()
+    //    {
+    //        if (TeamNumber == 1)
+    //        {
+    //            UIManager.singleton.team1ScoreText.text = MatchManager.singleton.team1Score.ToString();
+    //        }
+    //        else if (TeamNumber == 2)
+    //        {
+    //            UIManager.singleton.team2ScoreText.text = MatchManager.singleton.team2Score.ToString();
+    //        }
+    //    }
+
 }

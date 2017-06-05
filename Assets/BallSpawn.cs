@@ -9,15 +9,8 @@ public class BallSpawn : NetworkBehaviour {
 	void Start () {
 
         SpawnBall();
-        //Spawns the ball upon hosting of the game
-
+        //Calls SpawnBall to spawn the ball up starting the game
     }
-	
-	// Update is called once per frame
-	void Update () {
-
-    }
-
 
     public GameObject ballPrefab;
     //Creates an instance of a game object called ballPrefab
@@ -25,6 +18,7 @@ public class BallSpawn : NetworkBehaviour {
     public static GameObject ballObject;
     //Creates an instance of a game object called ball
 
+    //Spawns the ball at the position of the spawner this script is attached to
     void SpawnBall()
     {
         ballObject = (GameObject)Instantiate(ballPrefab, transform.position, transform.rotation);
